@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">TicTacToe</string>
+    <string name="version">TicTacToe_V_1.0</string>
+    <string name="players_details">Players Details</string>
+    <string name="enter_1st_player_nick_name">Enter 1st Player Nick Name</string>
+    <string name="enter_2nd_player_nick_name">Enter 2nd Player Nick Name</string>
+    <string name="have_a_good_day_friend_s">Have a good day friend\'s</string>
+    <string name="start_game">Start Game</string>
+    <string name="sign_in">Sign In</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="forget_password">Forget Password</string>
+    <string name="login">Login</string>
+    <string name="don_t_have_an_account">don\'t have an account?</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="user_name">User Name</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="don_t_worry_we_just_need_your_registered_email_address_and_it_s_done">Don\'t worry we just need your registered email address and it\'s done!</string>
+    <string name="reset_password">Reset Password</string>
+</resources>
