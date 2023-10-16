@@ -213,31 +213,31 @@ public class Game_Activity extends AppCompatActivity {
 
 
                     if (Button1.equals(Button2) && Button2.equals(Button3) && !Button1.equals("")) {
-                        NewGame(Button1);
+                        FindWinner(Button1, 1);
                         flag = 1;
                     } else if (Button4.equals(Button5) && Button5.equals(Button6) && !Button4.equals("")) {
-                        NewGame(Button4);
+                        FindWinner(Button4, 2);
                         flag = 1;
                     } else if (Button7.equals(Button8) && Button8.equals(Button9) && !Button7.equals("")) {
-                        NewGame(Button7);
+                        FindWinner(Button7, 3);
                         flag = 1;
                     } else if (Button1.equals(Button4) && Button4.equals(Button7) && !Button1.equals("")) {
-                        NewGame(Button1);
+                        FindWinner(Button1, 4);
                         flag = 1;
                     } else if (Button2.equals(Button5) && Button5.equals(Button8) && !Button2.equals("")) {
-                        NewGame(Button2);
+                        FindWinner(Button2, 5);
                         flag = 1;
                     } else if (Button3.equals(Button6) && Button6.equals(Button8) && !Button3.equals("")) {
-                        NewGame(Button3);
+                        FindWinner(Button3, 6);
                         flag = 1;
                     } else if (Button1.equals(Button5) && Button5.equals(Button9) && !Button1.equals("")) {
-                        NewGame(Button1);
+                        FindWinner(Button1, 7);
                         flag = 1;
                     } else if (Button3.equals(Button5) && Button5.equals(Button7) && !Button3.equals("")) {
-                        NewGame(Button3);
+                        FindWinner(Button3, 8);
                         flag = 1;
                     } else if (Move == 9) {
-                        NewGame("");
+                        NewGame();
                         flag = 1;
                     }
 
@@ -246,10 +246,8 @@ public class Game_Activity extends AppCompatActivity {
         }
     }
 
-    public void NewGame(String point) {
+    public void NewGame() {
         /*----------------------Time Delay---------------------------*/
-
-        FindWinner(point);
         Runnable runnable = new Runnable() {
             @SuppressLint("ResourceAsColor")
             @Override
@@ -264,6 +262,16 @@ public class Game_Activity extends AppCompatActivity {
                 GameActivity7noButton.setText("");
                 GameActivity8noButton.setText("");
                 GameActivity9noButton.setText("");
+
+                GameActivity1noButton.setVisibility(View.VISIBLE);
+                GameActivity2noButton.setVisibility(View.VISIBLE);
+                GameActivity3noButton.setVisibility(View.VISIBLE);
+                GameActivity4noButton.setVisibility(View.VISIBLE);
+                GameActivity5noButton.setVisibility(View.VISIBLE);
+                GameActivity6noButton.setVisibility(View.VISIBLE);
+                GameActivity7noButton.setVisibility(View.VISIBLE);
+                GameActivity8noButton.setVisibility(View.VISIBLE);
+                GameActivity9noButton.setVisibility(View.VISIBLE);
 
                 GameActivity1noButton.setTextColor(Color.parseColor("#102E44"));
                 GameActivity2noButton.setTextColor(Color.parseColor("#102E44"));
@@ -283,10 +291,10 @@ public class Game_Activity extends AppCompatActivity {
             }
         };
         Handler handler = new Handler(Looper.getMainLooper());
-        handler.postDelayed(runnable, 1000);
+        handler.postDelayed(runnable, 2000);
     }
 
-    public void FindWinner(String WinSymbol) {
+    public void FindWinner(String WinSymbol, int Format) {
         if (WinSymbol.equals(Player1stGot)) {
             Player1stPoint++;
             if (Player1stGot.equals("X")) {
@@ -319,6 +327,68 @@ public class Game_Activity extends AppCompatActivity {
             }
         } else if (WinSymbol.equals("")) {
             Toast.makeText(this, "Game is Draw", Toast.LENGTH_SHORT).show();
+        }
+        winningAnimation(Format);
+        NewGame();
+    }
+
+    private void winningAnimation(int format) {
+        if (format == 1) {
+            GameActivity4noButton.setVisibility(View.INVISIBLE);
+            GameActivity5noButton.setVisibility(View.INVISIBLE);
+            GameActivity6noButton.setVisibility(View.INVISIBLE);
+            GameActivity7noButton.setVisibility(View.INVISIBLE);
+            GameActivity8noButton.setVisibility(View.INVISIBLE);
+            GameActivity9noButton.setVisibility(View.INVISIBLE);
+        } else if (format == 2) {
+            GameActivity1noButton.setVisibility(View.INVISIBLE);
+            GameActivity2noButton.setVisibility(View.INVISIBLE);
+            GameActivity3noButton.setVisibility(View.INVISIBLE);
+            GameActivity7noButton.setVisibility(View.INVISIBLE);
+            GameActivity8noButton.setVisibility(View.INVISIBLE);
+            GameActivity9noButton.setVisibility(View.INVISIBLE);
+        } else if (format == 3) {
+            GameActivity1noButton.setVisibility(View.INVISIBLE);
+            GameActivity2noButton.setVisibility(View.INVISIBLE);
+            GameActivity3noButton.setVisibility(View.INVISIBLE);
+            GameActivity4noButton.setVisibility(View.INVISIBLE);
+            GameActivity5noButton.setVisibility(View.INVISIBLE);
+            GameActivity6noButton.setVisibility(View.INVISIBLE);
+        } else if (format == 4) {
+            GameActivity2noButton.setVisibility(View.INVISIBLE);
+            GameActivity3noButton.setVisibility(View.INVISIBLE);
+            GameActivity5noButton.setVisibility(View.INVISIBLE);
+            GameActivity6noButton.setVisibility(View.INVISIBLE);
+            GameActivity8noButton.setVisibility(View.INVISIBLE);
+            GameActivity9noButton.setVisibility(View.INVISIBLE);
+        } else if (format == 5) {
+            GameActivity1noButton.setVisibility(View.INVISIBLE);
+            GameActivity3noButton.setVisibility(View.INVISIBLE);
+            GameActivity4noButton.setVisibility(View.INVISIBLE);
+            GameActivity6noButton.setVisibility(View.INVISIBLE);
+            GameActivity7noButton.setVisibility(View.INVISIBLE);
+            GameActivity9noButton.setVisibility(View.INVISIBLE);
+        } else if (format == 6) {
+            GameActivity1noButton.setVisibility(View.INVISIBLE);
+            GameActivity2noButton.setVisibility(View.INVISIBLE);
+            GameActivity4noButton.setVisibility(View.INVISIBLE);
+            GameActivity5noButton.setVisibility(View.INVISIBLE);
+            GameActivity7noButton.setVisibility(View.INVISIBLE);
+            GameActivity9noButton.setVisibility(View.INVISIBLE);
+        } else if (format == 7) {
+            GameActivity2noButton.setVisibility(View.INVISIBLE);
+            GameActivity3noButton.setVisibility(View.INVISIBLE);
+            GameActivity4noButton.setVisibility(View.INVISIBLE);
+            GameActivity6noButton.setVisibility(View.INVISIBLE);
+            GameActivity7noButton.setVisibility(View.INVISIBLE);
+            GameActivity8noButton.setVisibility(View.INVISIBLE);
+        } else if (format == 8) {
+            GameActivity1noButton.setVisibility(View.INVISIBLE);
+            GameActivity2noButton.setVisibility(View.INVISIBLE);
+            GameActivity4noButton.setVisibility(View.INVISIBLE);
+            GameActivity6noButton.setVisibility(View.INVISIBLE);
+            GameActivity8noButton.setVisibility(View.INVISIBLE);
+            GameActivity9noButton.setVisibility(View.INVISIBLE);
         }
     }
 
