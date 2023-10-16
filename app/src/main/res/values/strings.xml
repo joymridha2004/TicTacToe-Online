@@ -10,6 +10,7 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="forget_password">Forget Password</string>
+    <string name="Underline_forget_password"><u>Forget Password</u></string>
     <string name="login">Login</string>
     <string name="don_t_have_an_account">don\'t have an account?</string>
     <string name="sign_up">Sign Up</string>
