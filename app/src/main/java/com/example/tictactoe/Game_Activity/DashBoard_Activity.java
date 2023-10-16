@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.cardview.widget.CardView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -50,8 +51,10 @@ public class DashBoard_Activity extends AppCompatActivity {
     private TextView DashBoardActivityPlayer2ndScore;
     private TextView DashBoardActivityMatchDate;
     private TextView DashBoardActivityMatchTime;
+    private TextView DashBoardActivityMatchCount;
     private TextView TextView1, TextView, Project_Link;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +85,7 @@ public class DashBoard_Activity extends AppCompatActivity {
         Project_Link = findViewById(R.id.Project_Link);
         PlayWithAIButton = findViewById(R.id.Play_With_AI_Button);
         ProfileDetailsCV = findViewById(R.id.Profile_Details_CV);
+        DashBoardActivityMatchCount = findViewById(R.id.DashBoard_Activity_Match_Count);
 
         /*<------------Handle_Personal_Details_TextView--------->*/
 
@@ -175,6 +179,7 @@ public class DashBoard_Activity extends AppCompatActivity {
                             DashBoardActivityPlayer2ndScore.setText(String.valueOf(documentSnapshot.getLong("2ndPlayerScore")));
                             DashBoardActivityMatchDate.setText(documentSnapshot.getString("matchDate"));
                             DashBoardActivityMatchTime.setText(documentSnapshot.getString("matchTime"));
+                            DashBoardActivityMatchCount.setText("MP: " + String.valueOf(documentSnapshot.getLong("matchIndex")+1));
                             TextView1.setText(getString(R.string.vs));
                             TextView.setText("/");
 
