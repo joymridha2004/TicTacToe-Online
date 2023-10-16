@@ -2,6 +2,7 @@ package com.example.tictactoe.Login_System_Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -35,6 +36,10 @@ public class Forget_Password_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forget_password);
+
+        /*<------------Night mode disable--------->*/
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         /*<------------Hooks--------->*/
 
