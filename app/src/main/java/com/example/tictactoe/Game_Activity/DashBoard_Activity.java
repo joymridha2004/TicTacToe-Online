@@ -46,8 +46,10 @@ public class DashBoard_Activity extends AppCompatActivity {
         documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                UserNameTV.setText(value.getString("userName"));
-                UserEmailTV.setText(value.getString("emailId"));
+                if (value != null) {
+                    UserNameTV.setText(value.getString("userName"));
+                    UserEmailTV.setText(value.getString("emailId"));
+                }
             }
         });
 
@@ -70,7 +72,6 @@ public class DashBoard_Activity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(DashBoard_Activity.this, Players_Details_Activity.class);
                 startActivity(intent);
-                finish();
             }
         });
 
