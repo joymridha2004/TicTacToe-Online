@@ -212,7 +212,7 @@ public class Game_Activity extends AppCompatActivity {
     }
 
     private String getCurrentDate() {
-        return new SimpleDateFormat("dd/LLL/yyy", Locale.getDefault()).format(new Date());
+        return new SimpleDateFormat("dd/MM/yyy", Locale.getDefault()).format(new Date());
     }
 
     private String generateMatchId() {
