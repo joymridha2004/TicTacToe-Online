@@ -1,5 +1,8 @@
 package com.example.tictactoe.Game_Activity;
 
+import static android.content.ContentValues.TAG;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -9,14 +12,27 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tictactoe.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.UUID;
 
 public class Game_Activity extends AppCompatActivity {
     /* --------------Game_Activity--------------- */
@@ -45,8 +61,6 @@ public class Game_Activity extends AppCompatActivity {
     String Player1stName;
     String Player2ndName;
 
-    TextView Game_Activity_Version_TV;
-
     int Move = 0, Player1stPoint = 0, Player2ndPoint = 0, ShapeMove = 0;
 
 
@@ -54,6 +68,9 @@ public class Game_Activity extends AppCompatActivity {
     Button QuitButton;
     ImageButton QuitCloseIV;
     TextView QuitNameDialogBoxTV;
+
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
 
 
     @Override
@@ -131,6 +148,7 @@ public class Game_Activity extends AppCompatActivity {
         QuitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ScoreUpdate();
                 startActivity(new Intent(Game_Activity.this, DashBoard_Activity.class));
                 finish();
             }
@@ -145,6 +163,60 @@ public class Game_Activity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void ScoreUpdate() {
+
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+
+        Map<String, Object> matchDetails = new HashMap<>();
+        matchDetails.put("matchTime", getCurrentTimeWithAmAndPm());
+        matchDetails.put("matchDate", getCurrentDate());
+        matchDetails.put("1stPlayerName", Player1stName);
+        matchDetails.put("2ndPlayerName", Player2ndName);
+        matchDetails.put("1stPlayerScore", Player1stPoint);
+        matchDetails.put("2ndPlayerScore", Player2ndPoint);
+
+        // Generate a unique match ID
+
+        String matchId = generateMatchId();
+
+        // Implement your own match ID generation logic
+
+        db.collection("matchDetails")
+                .document(mAuth.getCurrentUser().getUid())
+                .collection("matchId")
+                .document(matchId)
+                .set(matchDetails)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        // Handle successful write
+                        Log.d(TAG, "Match details added successfully!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Handle any errors
+                        Log.e(TAG, "Error adding match details: " + e.getMessage());
+                    }
+                });
+
+
+    }
+
+    private String getCurrentTimeWithAmAndPm() {
+        return new SimpleDateFormat("hh:mm a", Locale.getDefault()).format(new Date());
+    }
+
+    private String getCurrentDate() {
+        return new SimpleDateFormat("dd/LLL/yyy", Locale.getDefault()).format(new Date());
+    }
+
+    private String generateMatchId() {
+        return UUID.randomUUID().toString();
     }
 
 
