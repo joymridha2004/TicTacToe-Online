@@ -102,4 +102,5 @@
         app:layout_constraintTop_toBottomOf="@+id/Quit_Button"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="70dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

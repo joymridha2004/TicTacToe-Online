@@ -4,10 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tictactoe.R;
@@ -16,6 +18,7 @@ public class Players_Details_Activity extends AppCompatActivity {
 
     private EditText PlayersDetailsActivity1stNameET, PlayersDetailsActivity2ndNameET;
     private Button PlayersDetailsActivityStartGameButton;
+    private TextView Project_Link;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -23,9 +26,22 @@ public class Players_Details_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_players_details);
 
+        /*<------------Hooks--------->*/
+
         PlayersDetailsActivity1stNameET = findViewById(R.id.Players_Details_Activity_1st_Name_ET);
         PlayersDetailsActivity2ndNameET = findViewById(R.id.Players_Details_Activity_2nd_Name_ET);
         PlayersDetailsActivityStartGameButton = findViewById(R.id.Players_Details_Activity_Start_Game_Button);
+        Project_Link = findViewById(R.id.Project_Link);
+
+        /*<------------Handle_Github_link_On_click_Listener--------->*/
+
+        Project_Link.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/joymridha2004/TicTacToe-Online"));
+                startActivity(intent);
+            }
+        });
 
         /*---------------On Click Listener On Start Game Button--------------->*/
 
@@ -61,7 +77,6 @@ public class Players_Details_Activity extends AppCompatActivity {
                 } else {
                     Toast.makeText(getApplicationContext(), "Please Enter Details", Toast.LENGTH_SHORT).show();
                 }
-
 
             }
         });

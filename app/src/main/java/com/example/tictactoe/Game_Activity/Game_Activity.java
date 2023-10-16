@@ -9,6 +9,7 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -26,6 +27,9 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -35,43 +39,39 @@ import java.util.Map;
 import java.util.UUID;
 
 public class Game_Activity extends AppCompatActivity {
+
     /* --------------Game_Activity--------------- */
-    static int flag = 0;
 
-    Button GameActivityQuitButton;
-
-    Button GameActivity1noButton;
-    Button GameActivity2noButton;
-    Button GameActivity3noButton;
-    Button GameActivity4noButton;
-    Button GameActivity5noButton;
-    Button GameActivity6noButton;
-    Button GameActivity7noButton;
-    Button GameActivity8noButton;
-    Button GameActivity9noButton;
-
-    TextView Player1stGotTV;
-    TextView Player2ndGotTV;
-    TextView GameActivity1stPlayerMoveStatusTextView;
-    TextView GameActivity2ndPlayerMoveStatusTextView;
-    TextView GameActivity1stPlayerScoreTextView;
-    TextView GameActivity2ndPlayerScoreTextView;
-
-    String Button1, Button2, Button3, Button4, Button5, Button6, Button7, Button8, Button9, X = "X", O = "O", Player1stGot, Player2ndGot;
-    String Player1stName;
-    String Player2ndName;
-
-    int Move = 0, Player1stPoint = 0, Player2ndPoint = 0, ShapeMove = 0;
-
+    private static int flag = 0;
+    private Button GameActivityQuitButton;
+    private Button GameActivity1noButton;
+    private Button GameActivity2noButton;
+    private Button GameActivity3noButton;
+    private Button GameActivity4noButton;
+    private Button GameActivity5noButton;
+    private Button GameActivity6noButton;
+    private Button GameActivity7noButton;
+    private Button GameActivity8noButton;
+    private Button GameActivity9noButton;
+    private TextView Player1stGotTV;
+    private TextView Project_Link;
+    private TextView Player2ndGotTV;
+    private TextView GameActivity1stPlayerMoveStatusTextView;
+    private TextView GameActivity2ndPlayerMoveStatusTextView;
+    private TextView GameActivity1stPlayerScoreTextView;
+    private TextView GameActivity2ndPlayerScoreTextView;
+    private String Button1, Button2, Button3, Button4, Button5, Button6, Button7, Button8, Button9, X = "X", O = "O", Player1stGot, Player2ndGot;
+    private String Player1stName;
+    private String Player2ndName;
+    private int Move = 0, Player1stPoint = 0, Player2ndPoint = 0, ShapeMove = 0;
 
     /* --------------Quit_DialogBox--------------- */
-    Button QuitButton;
-    ImageButton QuitCloseIV;
-    TextView QuitNameDialogBoxTV;
 
+    private Button QuitButton;
+    private ImageButton QuitCloseIV;
+    private TextView QuitNameDialogBoxTV;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +79,6 @@ public class Game_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         /* --------------Previous Activity Pass the Name Through the intent--------------- */
-
 
         Player1stName = getIntent().getStringExtra("PlayerName1st");
         Player2ndName = getIntent().getStringExtra("PlayerName2nd");
@@ -92,7 +91,6 @@ public class Game_Activity extends AppCompatActivity {
         /*---------------Hooks Game Activity--------------->*/
 
         GameActivityQuitButton = findViewById(R.id.Game_Activity_Quit_Button);
-
         GameActivity1noButton = findViewById(R.id.Game_Activity_1no_Button);
         GameActivity2noButton = findViewById(R.id.Game_Activity_2no_Button);
         GameActivity3noButton = findViewById(R.id.Game_Activity_3no_Button);
@@ -102,14 +100,13 @@ public class Game_Activity extends AppCompatActivity {
         GameActivity7noButton = findViewById(R.id.Game_Activity_7no_Button);
         GameActivity8noButton = findViewById(R.id.Game_Activity_8no_Button);
         GameActivity9noButton = findViewById(R.id.Game_Activity_9no_Button);
-
-
         Player1stGotTV = findViewById(R.id.Player1st_Got_TV);
         Player2ndGotTV = findViewById(R.id.Player2nd_Got_TV);
         GameActivity1stPlayerMoveStatusTextView = findViewById(R.id.Game_Activity_1st_Player_Move_Status_Text_View);
         GameActivity2ndPlayerMoveStatusTextView = findViewById(R.id.Game_Activity_2nd_Player_Move_Status_Text_View);
         GameActivity1stPlayerScoreTextView = findViewById(R.id.Game_Activity_1st_Player_Score_Text_View);
         GameActivity2ndPlayerScoreTextView = findViewById(R.id.Game_Activity_2nd_Player_Score_Text_View);
+        Project_Link = findViewById(R.id.Project_Link);
 
         /*---------------Hooks Quit DialogBox--------------->*/
 
@@ -121,14 +118,22 @@ public class Game_Activity extends AppCompatActivity {
 
         Player1stGotTV.setText(Player1stName + " You " + " Got  'X'");
         Player2ndGotTV.setText(Player2ndName + " You " + " Got  'O'");
-
         GameActivity1stPlayerScoreTextView.setText("00");
         GameActivity2ndPlayerScoreTextView.setText("00");
-
         GameActivity1stPlayerMoveStatusTextView.setText("Now  " + Player1stName + " Your Game Move");
         GameActivity1stPlayerMoveStatusTextView.setTextColor(Color.parseColor("#FF000000"));
         GameActivity2ndPlayerMoveStatusTextView.setText("Waiting for Opponent Move ");
         GameActivity2ndPlayerMoveStatusTextView.setTextColor(Color.parseColor("#FF0000"));
+
+        /*<------------Handle_Github_link_On_click_Listener--------->*/
+
+        Project_Link.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/joymridha2004/TicTacToe-Online"));
+                startActivity(intent);
+            }
+        });
 
         /*---------------On Click Listener On ReStart Game Button--------------->*/
 
@@ -167,58 +172,91 @@ public class Game_Activity extends AppCompatActivity {
 
     private void ScoreUpdate() {
 
+        /* --------------Handle_Upload_Score_to_Firebase_Cloud_Storage------------------- */
+
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
-
-        Map<String, Object> matchDetails = new HashMap<>();
-        matchDetails.put("matchTime", getCurrentTimeWithAmAndPm());
-        matchDetails.put("matchDate", getCurrentDate());
-        matchDetails.put("1stPlayerName", Player1stName);
-        matchDetails.put("2ndPlayerName", Player2ndName);
-        matchDetails.put("1stPlayerScore", Player1stPoint);
-        matchDetails.put("2ndPlayerScore", Player2ndPoint);
-
-        // Generate a unique match ID
-
-        String matchId = generateMatchId();
-
-        // Implement your own match ID generation logic
 
         db.collection("matchDetails")
                 .document(mAuth.getCurrentUser().getUid())
                 .collection("matchId")
-                .document(matchId)
-                .set(matchDetails)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                .orderBy("matchIndex", Query.Direction.DESCENDING)
+                .limit(1)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
-                    public void onSuccess(Void aVoid) {
-                        // Handle successful write
-                        Log.d(TAG, "Match details added successfully!");
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        int matchIndex = 0;
+                        if (!queryDocumentSnapshots.isEmpty()) {
+                            QueryDocumentSnapshot lastMatch = (QueryDocumentSnapshot) queryDocumentSnapshots.getDocuments().get(0);
+                            if (lastMatch.contains("matchIndex")) {
+                                matchIndex = lastMatch.getLong("matchIndex").intValue() + 1;
+                            }
+                        }
+
+                        Map<String, Object> matchDetails = new HashMap<>();
+                        matchDetails.put("matchTime", getCurrentTimeWithAmAndPm());
+                        matchDetails.put("matchDate", getCurrentDate());
+                        matchDetails.put("1stPlayerName", Player1stName);
+                        matchDetails.put("2ndPlayerName", Player2ndName);
+                        matchDetails.put("1stPlayerScore", Player1stPoint);
+                        matchDetails.put("2ndPlayerScore", Player2ndPoint);
+                        matchDetails.put("matchIndex", matchIndex);
+
+                        // Generate a unique match ID
+                        String matchId = generateMatchId();
+
+                        // Implement your own match ID generation logic
+                        db.collection("matchDetails")
+                                .document(mAuth.getCurrentUser().getUid())
+                                .collection("matchId")
+                                .document(matchId)
+                                .set(matchDetails)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        // Handle successful write
+                                        Log.d(TAG, "Match details added successfully!");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        // Handle any errors
+                                        Log.e(TAG, "Error adding match details: " + e.getMessage());
+                                    }
+                                });
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         // Handle any errors
-                        Log.e(TAG, "Error adding match details: " + e.getMessage());
+                        Log.e(TAG, "Error fetching match details: " + e.getMessage());
                     }
                 });
 
-
     }
+
+    /* --------------Handle_Get_CurrentTime------------------- */
 
     private String getCurrentTimeWithAmAndPm() {
         return new SimpleDateFormat("hh:mm a", Locale.getDefault()).format(new Date());
     }
 
+    /* --------------Handle_Get_CurrentDate------------------- */
+
     private String getCurrentDate() {
         return new SimpleDateFormat("dd/MM/yyy", Locale.getDefault()).format(new Date());
     }
+
+    /* --------------Handle_Get_Unique_MatchId------------------- */
 
     private String generateMatchId() {
         return UUID.randomUUID().toString();
     }
 
+    /* --------------Handle_Game_Logic------------------- */
 
     @SuppressLint("ResourceAsColor")
     public void check(View view) {
@@ -319,7 +357,9 @@ public class Game_Activity extends AppCompatActivity {
     }
 
     public void NewGame() {
+
         /*----------------------Time Delay---------------------------*/
+
         Runnable runnable = new Runnable() {
             @SuppressLint("ResourceAsColor")
             @Override
@@ -360,13 +400,18 @@ public class Game_Activity extends AppCompatActivity {
 
 
                 flag = 0;
+
             }
         };
         Handler handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(runnable, 2000);
+
     }
 
+    /* --------------Handle_Finding_Who_is_Winner------------------- */
+
     public void FindWinner(String WinSymbol, int Format) {
+
         if (WinSymbol.equals(Player1stGot)) {
             Player1stPoint++;
             if (Player1stGot.equals("X")) {
@@ -400,9 +445,13 @@ public class Game_Activity extends AppCompatActivity {
         } else if (WinSymbol.equals("")) {
             Toast.makeText(this, "Game is Draw", Toast.LENGTH_SHORT).show();
         }
+
         winningAnimation(Format);
         NewGame();
+
     }
+
+    /* --------------Handle_Winning_Animation------------------- */
 
     private void winningAnimation(int format) {
         if (format == 1) {

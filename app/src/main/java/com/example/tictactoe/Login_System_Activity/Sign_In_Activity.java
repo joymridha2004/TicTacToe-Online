@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -31,8 +32,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
 public class Sign_In_Activity extends AppCompatActivity {
+
     public static String PREFS_NAME = "MyPrefsFile";
-    private TextView dontHaveAnAccount;
+    private TextView dontHaveAnAccount, Project_Link;
     private TextView resetPassword;
     private Drawable errorIcon;
     private EditText email;
@@ -42,12 +44,14 @@ public class Sign_In_Activity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseFirestore fStore;
     private String userUid;
-    String nameText;
+    private String nameText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
+
+        /*<------------Hooks--------->*/
 
         dontHaveAnAccount = findViewById(R.id.Sign_In_Activity_Sign_Up_TV);
         resetPassword = findViewById(R.id.Sign_In_Forget_Password_TV);
@@ -58,8 +62,21 @@ public class Sign_In_Activity extends AppCompatActivity {
         signInProgress = findViewById(R.id.Sign_in_Progress);
         mAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
+        Project_Link = findViewById(R.id.Project_Link);
 
         errorIcon.setBounds(0, 0, errorIcon.getIntrinsicWidth(), errorIcon.getIntrinsicHeight());
+
+        /*<------------Handle_Github_link_On_click_Listener--------->*/
+
+        Project_Link.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/joymridha2004/TicTacToe-Online"));
+                startActivity(intent);
+            }
+        });
+
+        /*<------------Handle_Go_To_SignUp_On_click_Listener--------->*/
 
         dontHaveAnAccount.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,6 +87,8 @@ public class Sign_In_Activity extends AppCompatActivity {
             }
         });
 
+        /*<------------Handle_Go_To_ForgetPassword_On_click_Listener--------->*/
+
         resetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,6 +97,8 @@ public class Sign_In_Activity extends AppCompatActivity {
                 finish();
             }
         });
+
+        /*<------------Handle_Go_To_DashBoard_On_click_Listener--------->*/
 
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,6 +110,9 @@ public class Sign_In_Activity extends AppCompatActivity {
     }
 
     private void signInWithFirebase() {
+
+        /*<------------Handle_EditText_nullPoint_and_other_validations--------->*/
+
         if (email.getText().toString().matches("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+")) {
             signInProgress.setVisibility(View.VISIBLE);
             mAuth.signInWithEmailAndPassword(email.getText().toString(), password.getText().toString())
@@ -139,6 +163,7 @@ public class Sign_In_Activity extends AppCompatActivity {
         } else {
             email.setError("Invalid Email Pattern!", errorIcon);
         }
+
     }
 
 }

@@ -89,7 +89,6 @@
             app:layout_constraintTop_toTopOf="@+id/Game_Activity_2nd_Player_Text_View"
             tools:ignore="MissingConstraints" />
 
-
         <TextView
             android:id="@+id/Game_Activity_1st_Player_Move_Status_Text_View"
             android:layout_width="wrap_content"

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -25,7 +26,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Sign_Up_Activity extends AppCompatActivity {
-    private TextView alreadyHaveAnAccount;
+
+    private TextView alreadyHaveAnAccount, Project_Link;
     private Drawable errorIcon;
     private EditText userName;
     private EditText email;
@@ -41,6 +43,8 @@ public class Sign_Up_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
+        /*<------------Hooks--------->*/
+
         alreadyHaveAnAccount = findViewById(R.id.Sign_Up_Activity_Sign_In_TV);
         errorIcon = getResources().getDrawable(R.drawable.ic_error);
         userName = findViewById(R.id.Sign_Up_Activity_User_Name_ET);
@@ -51,8 +55,21 @@ public class Sign_Up_Activity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         signUpProgress = findViewById(R.id.Sign_Up_Progress);
         db = FirebaseFirestore.getInstance();
+        Project_Link = findViewById(R.id.Project_Link);
 
         errorIcon.setBounds(0, 0, errorIcon.getIntrinsicWidth(), errorIcon.getIntrinsicHeight());
+
+        /*<------------Handle_Github_link_On_click_Listener--------->*/
+
+        Project_Link.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/joymridha2004/TicTacToe-Online"));
+                startActivity(intent);
+            }
+        });
+
+        /*<------------Handle_Go_To_SignIn_On_click_Listener--------->*/
 
         alreadyHaveAnAccount.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,6 +79,8 @@ public class Sign_Up_Activity extends AppCompatActivity {
                 finish();
             }
         });
+
+        /*<------------Handle_Go_To_SignIn_After_SignUP_On_click_Listener--------->*/
 
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +92,9 @@ public class Sign_Up_Activity extends AppCompatActivity {
     }
 
     private void signUpWithFirebase() {
+
+        /*<------------Handle_EditText_nullPoint_and_other_validations--------->*/
+
         if (email.getText().toString().matches("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+")) {
             if (password.getText().toString().equals(confirmPassword.getText().toString())) {
                 signUpProgress.setVisibility(View.VISIBLE);
@@ -122,6 +144,7 @@ public class Sign_Up_Activity extends AppCompatActivity {
         } else {
             email.setError("Invalid Email Pattern!", errorIcon);
         }
+
     }
 
 }

@@ -11,6 +11,7 @@ import com.example.tictactoe.Game_Activity.DashBoard_Activity;
 import com.example.tictactoe.Login_System_Activity.Sign_In_Activity;
 
 public class Splash_Activity extends AppCompatActivity {
+
     private Handler handler;
     private Runnable runnable;
 
@@ -19,11 +20,14 @@ public class Splash_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+        /*<------------Handle_Timing_To_Launch_Next_Activity--------->*/
 
         handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+
+                /*<------------Handle_Start_What_Is_Next_Activity--------->*/
 
                 SharedPreferences sharedPreferences = getSharedPreferences(Sign_In_Activity.PREFS_NAME, 0);
                 boolean hasLoggedIn = sharedPreferences.getBoolean("hasLoggedIn", false);
