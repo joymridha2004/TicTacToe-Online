@@ -1,4 +1,4 @@
-package com.example.tictactoe;
+package com.example.tictactoe.Game_Activity;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.tictactoe.Login_System_Activity.Sign_In_Activity;
+import com.example.tictactoe.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -22,6 +24,7 @@ public class DashBoard_Activity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private TextView UserNameTV, UserEmailTV;
     private FirebaseFirestore fStore;
+    private Button PlayWithFriendButton;
 
     private String userUid;
 
@@ -35,6 +38,7 @@ public class DashBoard_Activity extends AppCompatActivity {
         fStore = FirebaseFirestore.getInstance();
         UserNameTV = findViewById(R.id.User_Name_TV);
         UserEmailTV = findViewById(R.id.User_Email_TV);
+        PlayWithFriendButton = findViewById(R.id.Play_With_Friend_Button);
 
         userUid = mAuth.getCurrentUser().getUid();
 
@@ -46,6 +50,7 @@ public class DashBoard_Activity extends AppCompatActivity {
                 UserEmailTV.setText(value.getString("emailId"));
             }
         });
+
         LogoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,6 +60,15 @@ public class DashBoard_Activity extends AppCompatActivity {
                 editor.putBoolean("hasLoggedIn", false);
                 editor.commit();
                 Intent intent = new Intent(DashBoard_Activity.this, Sign_In_Activity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        PlayWithFriendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DashBoard_Activity.this, Players_Details_Activity.class);
                 startActivity(intent);
                 finish();
             }

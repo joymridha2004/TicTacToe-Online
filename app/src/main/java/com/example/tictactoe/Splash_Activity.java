@@ -7,6 +7,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 
+import com.example.tictactoe.Game_Activity.DashBoard_Activity;
+import com.example.tictactoe.Login_System_Activity.Sign_In_Activity;
+
 public class Splash_Activity extends AppCompatActivity {
     private Handler handler;
     private Runnable runnable;

@@ -13,16 +13,22 @@
         android:theme="@style/Theme.TicTacToe"
         tools:targetApi="31">
         <activity
-            android:name=".DashBoard_Activity"
+            android:name=".Game_Activity.Game_Activity"
             android:exported="false" />
         <activity
-            android:name=".Forget_Password_Activity"
+            android:name=".Game_Activity.Players_Details_Activity"
             android:exported="false" />
         <activity
-            android:name=".Sign_Up_Activity"
+            android:name=".Game_Activity.DashBoard_Activity"
             android:exported="false" />
         <activity
-            android:name=".Sign_In_Activity"
+            android:name=".Login_System_Activity.Forget_Password_Activity"
+            android:exported="false" />
+        <activity
+            android:name=".Login_System_Activity.Sign_Up_Activity"
+            android:exported="false" />
+        <activity
+            android:name=".Login_System_Activity.Sign_In_Activity"
             android:exported="false" />
         <activity
             android:name=".Splash_Activity"

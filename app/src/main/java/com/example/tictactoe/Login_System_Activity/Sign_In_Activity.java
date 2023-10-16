@@ -1,4 +1,4 @@
-package com.example.tictactoe;
+package com.example.tictactoe.Login_System_Activity;
 
 import static android.content.ContentValues.TAG;
 
@@ -10,8 +10,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +18,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.tictactoe.Game_Activity.DashBoard_Activity;
+import com.example.tictactoe.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
