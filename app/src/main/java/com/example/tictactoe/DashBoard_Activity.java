@@ -1,5 +1,6 @@
 package com.example.tictactoe;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -7,12 +8,22 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 public class DashBoard_Activity extends AppCompatActivity {
     private Button LogoutButton;
     private FirebaseAuth mAuth;
+    private TextView UserNameTV, UserEmailTV;
+    private FirebaseFirestore fStore;
+
+    private String userUid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +32,20 @@ public class DashBoard_Activity extends AppCompatActivity {
 
         LogoutButton = findViewById(R.id.Logout_Button);
         mAuth = FirebaseAuth.getInstance();
+        fStore = FirebaseFirestore.getInstance();
+        UserNameTV = findViewById(R.id.User_Name_TV);
+        UserEmailTV = findViewById(R.id.User_Email_TV);
 
+        userUid = mAuth.getCurrentUser().getUid();
+
+        DocumentReference documentReference = fStore.collection("users").document(userUid);
+        documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                UserNameTV.setText(value.getString("userName"));
+                UserEmailTV.setText(value.getString("emailId"));
+            }
+        });
         LogoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
