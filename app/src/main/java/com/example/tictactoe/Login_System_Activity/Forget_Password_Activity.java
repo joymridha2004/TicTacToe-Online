@@ -60,6 +60,7 @@ public class Forget_Password_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/joymridha2004/TicTacToe-Online"));
+                overridePendingTransition(R.anim.from_right, R.anim.out_from_left);
                 startActivity(intent);
             }
         });
@@ -71,6 +72,7 @@ public class Forget_Password_Activity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Forget_Password_Activity.this, Sign_In_Activity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.from_left, R.anim.out_from_right);
                 finish();
             }
         });

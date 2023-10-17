@@ -44,6 +44,7 @@ public class Players_Details_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/joymridha2004/TicTacToe-Online"));
+                overridePendingTransition(R.anim.from_right, R.anim.out_from_left);
                 startActivity(intent);
             }
         });

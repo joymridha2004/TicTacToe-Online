@@ -109,6 +109,7 @@ public class DashBoard_Activity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/joymridha2004/TicTacToe-Online"));
                 startActivity(intent);
+                overridePendingTransition(R.anim.from_right, R.anim.out_from_left);
             }
         });
 
@@ -124,6 +125,7 @@ public class DashBoard_Activity extends AppCompatActivity {
                 editor.commit();
                 Intent intent = new Intent(DashBoard_Activity.this, Sign_In_Activity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.from_left, R.anim.out_from_right);
                 finish();
             }
         });
@@ -134,7 +136,9 @@ public class DashBoard_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(DashBoard_Activity.this, Players_Details_Activity.class);
+                overridePendingTransition(R.anim.from_right, R.anim.out_from_left);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -179,7 +183,7 @@ public class DashBoard_Activity extends AppCompatActivity {
                             DashBoardActivityPlayer2ndScore.setText(String.valueOf(documentSnapshot.getLong("2ndPlayerScore")));
                             DashBoardActivityMatchDate.setText(documentSnapshot.getString("matchDate"));
                             DashBoardActivityMatchTime.setText(documentSnapshot.getString("matchTime"));
-                            DashBoardActivityMatchCount.setText("MP: " + String.valueOf(documentSnapshot.getLong("matchIndex")+1));
+                            DashBoardActivityMatchCount.setText("MP: " + String.valueOf(documentSnapshot.getLong("matchIndex") + 1));
                             TextView1.setText(getString(R.string.vs));
                             TextView.setText("/");
 

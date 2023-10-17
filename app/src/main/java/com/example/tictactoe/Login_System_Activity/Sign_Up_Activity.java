@@ -71,6 +71,7 @@ public class Sign_Up_Activity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/joymridha2004/TicTacToe-Online"));
                 startActivity(intent);
+                overridePendingTransition(R.anim.from_right, R.anim.out_from_left);
             }
         });
 
@@ -81,6 +82,8 @@ public class Sign_Up_Activity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Sign_Up_Activity.this, Sign_In_Activity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.from_left, R.anim.out_from_right);
+
                 finish();
             }
         });
@@ -130,6 +133,7 @@ public class Sign_Up_Activity extends AppCompatActivity {
                                                 public void onComplete(@NonNull Task<Void> task) {
                                                     Intent intent = new Intent(Sign_Up_Activity.this, Sign_In_Activity.class);
                                                     startActivity(intent);
+                                                    overridePendingTransition(R.anim.from_left, R.anim.out_from_right);
                                                 }
                                             }).addOnFailureListener(new OnFailureListener() {
                                                 @Override

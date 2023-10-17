@@ -78,6 +78,7 @@ public class Sign_In_Activity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/joymridha2004/TicTacToe-Online"));
                 startActivity(intent);
+                overridePendingTransition(R.anim.from_right, R.anim.out_from_left);
             }
         });
 
@@ -88,6 +89,7 @@ public class Sign_In_Activity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Sign_In_Activity.this, Sign_Up_Activity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.from_right, R.anim.out_from_left);
                 finish();
             }
         });
@@ -99,6 +101,7 @@ public class Sign_In_Activity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Sign_In_Activity.this, Forget_Password_Activity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.from_right, R.anim.out_from_left);
                 finish();
             }
         });
@@ -156,6 +159,7 @@ public class Sign_In_Activity extends AppCompatActivity {
                                     editor.commit();
                                     Intent intent = new Intent(Sign_In_Activity.this, DashBoard_Activity.class);
                                     startActivity(intent);
+                                    overridePendingTransition(R.anim.from_right, R.anim.out_from_left);
                                     finish();
                                 } else {
                                     Toast.makeText(Sign_In_Activity.this, "Please verify your Email.", Toast.LENGTH_SHORT).show();

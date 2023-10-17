@@ -137,6 +137,7 @@ public class Game_Activity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/joymridha2004/TicTacToe-Online"));
                 startActivity(intent);
+                overridePendingTransition(R.anim.from_right, R.anim.out_from_left);
             }
         });
 
@@ -160,6 +161,7 @@ public class Game_Activity extends AppCompatActivity {
             public void onClick(View view) {
                 ScoreUpdate();
                 startActivity(new Intent(Game_Activity.this, DashBoard_Activity.class));
+                overridePendingTransition(R.anim.from_left, R.anim.out_from_right);
                 finish();
             }
         });
