@@ -26,24 +26,19 @@ public class Splash_Activity extends AppCompatActivity {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         /*<------------Handle_Timing_To_Launch_Next_Activity--------->*/
-
-        handler = new Handler();
+        handler = new Handler(); // initialize the handler
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-
-                /*<------------Handle_Start_What_Is_Next_Activity--------->*/
-
                 SharedPreferences sharedPreferences = getSharedPreferences(Sign_In_Activity.PREFS_NAME, 0);
                 boolean hasLoggedIn = sharedPreferences.getBoolean("hasLoggedIn", false);
-                Intent intent = null;
+                Intent intent;
                 if (hasLoggedIn) {
                     intent = new Intent(Splash_Activity.this, DashBoard_Activity.class);
-                    finish();
                 } else {
                     intent = new Intent(Splash_Activity.this, Sign_In_Activity.class);
-                    finish();
                 }
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP); // Add these flags
                 startActivity(intent);
                 finish();
             }
