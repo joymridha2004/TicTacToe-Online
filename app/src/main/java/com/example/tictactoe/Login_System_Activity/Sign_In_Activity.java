@@ -24,6 +24,7 @@ import com.example.tictactoe.Game_Activity.DashBoard_Activity;
 import com.example.tictactoe.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -38,8 +39,8 @@ public class Sign_In_Activity extends AppCompatActivity {
     private TextView dontHaveAnAccount, Project_Link;
     private TextView resetPassword;
     private Drawable errorIcon;
-    private EditText email;
-    private EditText password;
+    private TextInputEditText email;
+    private TextInputEditText password;
     private Button signInButton;
     private ProgressBar signInProgress;
     private FirebaseAuth mAuth;

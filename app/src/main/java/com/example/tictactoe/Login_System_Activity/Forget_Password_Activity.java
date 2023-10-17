@@ -19,13 +19,14 @@ import android.widget.TextView;
 import com.example.tictactoe.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class Forget_Password_Activity extends AppCompatActivity {
 
     private TextView back;
     private Drawable errorIcon;
-    private EditText email;
+    private TextInputEditText email;
     private ProgressBar resetPasswordProgress;
     private TextView responseMassage;
     private Button resetPasswordButton;

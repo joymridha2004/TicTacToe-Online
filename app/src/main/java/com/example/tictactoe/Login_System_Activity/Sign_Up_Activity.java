@@ -19,6 +19,7 @@ import com.example.tictactoe.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -30,10 +31,10 @@ public class Sign_Up_Activity extends AppCompatActivity {
 
     private TextView alreadyHaveAnAccount, Project_Link;
     private Drawable errorIcon;
-    private EditText userName;
-    private EditText email;
-    private EditText password;
-    private EditText confirmPassword;
+    private TextInputEditText userName;
+    private TextInputEditText email;
+    private TextInputEditText password;
+    private TextInputEditText confirmPassword;
     private Button signUpButton;
     private FirebaseAuth mAuth;
     private ProgressBar signUpProgress;

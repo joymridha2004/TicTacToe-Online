@@ -37,58 +37,75 @@
         app:layout_constraintTop_toBottomOf="@+id/Project_Link"
         tools:ignore="MissingConstraints" />
 
-    <EditText
-        android:id="@+id/Sign_Up_Activity_User_Name_ET"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/Sign_Up_Activity_User_Name_TIL"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="50dp"
-        android:background="@drawable/edit_text_border_shape"
-        android:fontFamily="@font/poppins"
-        android:hint="@string/user_name"
-        android:inputType="text"
-        android:maxLength="20"
-        android:maxLines="1"
-        android:paddingStart="15dp"
-        android:textColor="@color/theme_color"
-        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/Sign_Up_TV"
         app:layout_constraintStart_toStartOf="@+id/Sign_Up_TV"
-        app:layout_constraintTop_toBottomOf="@+id/Sign_Up_TV"
-        tools:ignore="Autofill,MissingConstraints,RtlSymmetry" />
+        app:layout_constraintTop_toBottomOf="@+id/Sign_Up_TV">
 
-    <EditText
-        android:id="@+id/Sign_Up_Activity_Email_ET"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/Sign_Up_Activity_User_Name_ET"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/edit_text_border_shape"
+            android:drawableStart="@drawable/person"
+            android:drawablePadding="15dp"
+            android:fontFamily="@font/poppins"
+            android:hint="@string/user_name"
+            android:inputType="text"
+            android:maxLength="20"
+            android:paddingStart="15dp"
+            android:textColor="@color/theme_color"
+            android:textSize="16sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/Sign_Up_Activity_Email_TIL"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="50dp"
-        android:background="@drawable/edit_text_border_shape"
-        android:fontFamily="@font/poppins"
-        android:hint="@string/email"
-        android:inputType="textEmailAddress"
-        android:maxLines="1"
-        android:paddingStart="15dp"
-        android:textColor="@color/theme_color"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/Sign_Up_Activity_User_Name_ET"
-        app:layout_constraintStart_toStartOf="@+id/Sign_Up_Activity_User_Name_ET"
-        app:layout_constraintTop_toBottomOf="@+id/Sign_Up_Activity_User_Name_ET"
-        tools:ignore="Autofill,MissingConstraints,RtlSymmetry" />
+        app:layout_constraintEnd_toEndOf="@+id/Sign_Up_Activity_User_Name_TIL"
+        app:layout_constraintStart_toStartOf="@+id/Sign_Up_Activity_User_Name_TIL"
+        app:layout_constraintTop_toBottomOf="@+id/Sign_Up_Activity_User_Name_TIL">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/Sign_Up_Activity_Email_ET"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/edit_text_border_shape"
+            android:drawableStart="@drawable/email"
+            android:drawablePadding="15dp"
+            android:fontFamily="@font/poppins"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress"
+            android:paddingStart="15dp"
+            android:textColor="@color/theme_color"
+            android:textSize="16sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/passwordTextInputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="50dp"
         android:hint="@string/password"
-        app:layout_constraintEnd_toEndOf="@+id/Sign_Up_Activity_Email_ET"
-        app:layout_constraintStart_toStartOf="@+id/Sign_Up_Activity_Email_ET"
-        app:layout_constraintTop_toBottomOf="@+id/Sign_Up_Activity_Email_ET"
+        app:layout_constraintEnd_toEndOf="@+id/Sign_Up_Activity_Email_TIL"
+        app:layout_constraintStart_toStartOf="@+id/Sign_Up_Activity_Email_TIL"
+        app:layout_constraintTop_toBottomOf="@+id/Sign_Up_Activity_Email_TIL"
         app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -96,9 +113,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/edit_text_border_shape"
+            android:drawableStart="@drawable/password"
+            android:drawablePadding="15dp"
             android:fontFamily="@font/poppins"
             android:inputType="textPassword"
-            android:maxLines="1"
             android:paddingStart="15dp"
             android:textColor="@color/theme_color"
             android:textSize="16sp" />
@@ -107,6 +125,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/confirmPasswordTextInputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
@@ -123,9 +142,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/edit_text_border_shape"
+            android:drawableStart="@drawable/email"
+            android:drawablePadding="15dp"
             android:fontFamily="@font/poppins"
             android:inputType="textPassword"
-            android:maxLines="1"
             android:paddingStart="15dp"
             android:textColor="@color/theme_color"
             android:textSize="16sp" />
