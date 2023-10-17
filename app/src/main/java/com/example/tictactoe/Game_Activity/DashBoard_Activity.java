@@ -89,18 +89,8 @@ public class DashBoard_Activity extends AppCompatActivity {
 
         /*<------------Handle_Personal_Details_TextView--------->*/
 
-        DocumentReference documentReference = fStore.collection("users").document(userUid);
-        documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                if (value != null) {
-                    UserNameTV.setText(value.getString("userName"));
-                    UserEmailTV.setText(value.getString("emailId"));
-
-                    fetchRecentMatchData();
-                }
-            }
-        });
+        personalDetails();
+        fetchRecentMatchData();
 
         /*<------------Handle_Github_link_On_click_Listener--------->*/
 
@@ -162,6 +152,23 @@ public class DashBoard_Activity extends AppCompatActivity {
 
     }
 
+    /*<------------Handle_Update_personal_Details--------->*/
+
+    private void personalDetails() {
+
+        DocumentReference documentReference = fStore.collection("users").document(userUid);
+        documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (value != null) {
+                    UserNameTV.setText(value.getString("userName"));
+                    UserEmailTV.setText(value.getString("emailId"));
+                }
+            }
+        });
+
+    }
+
     private void fetchRecentMatchData() {
 
         /*<------------Handle_Fetch_CurrentUser_MatchDetails_Data_From_FireBase--------->*/
@@ -198,6 +205,13 @@ public class DashBoard_Activity extends AppCompatActivity {
                     }
                 });
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        personalDetails();
+        fetchRecentMatchData();
     }
 
 }
