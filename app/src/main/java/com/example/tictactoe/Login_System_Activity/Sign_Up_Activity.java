@@ -134,6 +134,7 @@ public class Sign_Up_Activity extends AppCompatActivity {
                                                 public void onComplete(@NonNull Task<Void> task) {
                                                     Intent intent = new Intent(Sign_Up_Activity.this, Sign_In_Activity.class);
                                                     startActivity(intent);
+                                                    finish();
                                                     overridePendingTransition(R.anim.from_left, R.anim.out_from_right);
                                                 }
                                             }).addOnFailureListener(new OnFailureListener() {
