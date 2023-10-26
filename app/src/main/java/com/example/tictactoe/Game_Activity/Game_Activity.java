@@ -73,6 +73,7 @@ public class Game_Activity extends AppCompatActivity {
     private TextView QuitNameDialogBoxTV;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
+    private Dialog QuitDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +91,7 @@ public class Game_Activity extends AppCompatActivity {
 
         /* --------------DialogBox Creation--------------- */
 
-        Dialog QuitDialog = new Dialog(this);
+        QuitDialog = new Dialog(this);
         QuitDialog.setContentView(R.layout.quit_dialog_box);
 
         /*---------------Hooks Game Activity--------------->*/
@@ -520,4 +521,12 @@ public class Game_Activity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("MissingSuperCall")
+    @Override
+    public void onBackPressed() {
+
+        QuitNameDialogBoxTV.setText(Player1stName + " And " + Player2ndName);
+        QuitDialog.show();
+
+    }
 }
