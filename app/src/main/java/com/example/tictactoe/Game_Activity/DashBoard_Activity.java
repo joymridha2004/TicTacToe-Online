@@ -7,12 +7,17 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.view.ViewCompat;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +28,7 @@ import com.example.tictactoe.Login_System_Activity.Sign_In_Activity;
 import com.example.tictactoe.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -53,6 +59,7 @@ public class DashBoard_Activity extends AppCompatActivity {
     private TextView DashBoardActivityMatchTime;
     private TextView DashBoardActivityMatchCount;
     private TextView TextView1, TextView, Project_Link;
+    private ShapeableImageView userPhotoIV;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -86,6 +93,7 @@ public class DashBoard_Activity extends AppCompatActivity {
         PlayWithAIButton = findViewById(R.id.Play_With_AI_Button);
         ProfileDetailsCV = findViewById(R.id.Profile_Details_CV);
         DashBoardActivityMatchCount = findViewById(R.id.DashBoard_Activity_Match_Count);
+        userPhotoIV = findViewById(R.id.User_Photo_IV);
 
         /*<------------Handle_Personal_Details_TextView--------->*/
 
@@ -146,7 +154,11 @@ public class DashBoard_Activity extends AppCompatActivity {
         ProfileDetailsCV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(DashBoard_Activity.this, "This Feature is available for Task 2", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(DashBoard_Activity.this, Account_Details_Activity.class);
+                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(DashBoard_Activity.this, userPhotoIV, ViewCompat.getTransitionName(userPhotoIV));
+                startActivity(intent, optionsCompat.toBundle());
+
             }
         });
 
@@ -160,13 +172,23 @@ public class DashBoard_Activity extends AppCompatActivity {
         documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                if (value != null) {
-                    UserNameTV.setText(value.getString("userName"));
-                    UserEmailTV.setText(value.getString("emailId"));
+                UserNameTV.setText(value.getString("userName"));
+                UserEmailTV.setText(value.getString("emailId"));
+                String avatarBase64 = value.getString("avatar");
+                if (avatarBase64 != null) {
+                    Bitmap avatarBitmap = convertBase64ToBitmap(avatarBase64);
+                    if (avatarBitmap != null) {
+                        userPhotoIV.setImageBitmap(avatarBitmap);
+                    }
                 }
             }
         });
 
+    }
+
+    private Bitmap convertBase64ToBitmap(String base64String) {
+        byte[] decodedString = Base64.decode(base64String, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
     }
 
     private void fetchRecentMatchData() {

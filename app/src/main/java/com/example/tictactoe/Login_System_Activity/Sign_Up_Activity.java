@@ -4,13 +4,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +27,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,6 +44,7 @@ public class Sign_Up_Activity extends AppCompatActivity {
     private ProgressBar signUpProgress;
     private FirebaseFirestore db;
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,6 +131,10 @@ public class Sign_Up_Activity extends AppCompatActivity {
                                     Map<String, Object> user = new HashMap<>();
                                     user.put("userName", userName.getText().toString());
                                     user.put("emailId", email.getText().toString());
+                                    String avatarBase64 = saveImageToInternalStorage();
+                                    if (avatarBase64 != null) {
+                                        user.put("avatar", avatarBase64);
+                                    }
                                     db.collection("users")
                                             .document(task.getResult().getUser().getUid())
                                             .set(user)
@@ -156,6 +165,22 @@ public class Sign_Up_Activity extends AppCompatActivity {
             email.setError("Invalid Email Pattern!", errorIcon);
         }
 
+    }
+
+    private String convertBitmapToBase64(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        byte[] byteArray = byteArrayOutputStream.toByteArray();
+        return Base64.encodeToString(byteArray, Base64.DEFAULT);
+    }
+
+    private String saveImageToInternalStorage() {
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.avatar);
+
+        if (bitmap != null) {
+            return convertBitmapToBase64(bitmap);
+        }
+        return null;
     }
 
 }
