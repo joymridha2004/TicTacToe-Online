@@ -88,17 +88,33 @@ public class DashBoard_Activity extends AppCompatActivity {
         DashBoardActivityMatchTime = findViewById(R.id.DashBoard_Activity_Match_Time);
         TextView1 = findViewById(R.id.TextView1);
         TextView = findViewById(R.id.TextView);
-        userUid = mAuth.getCurrentUser().getUid();
         Project_Link = findViewById(R.id.Project_Link);
         PlayWithAIButton = findViewById(R.id.Play_With_AI_Button);
         ProfileDetailsCV = findViewById(R.id.Profile_Details_CV);
         DashBoardActivityMatchCount = findViewById(R.id.DashBoard_Activity_Match_Count);
         userPhotoIV = findViewById(R.id.User_Photo_IV);
 
-        /*<------------Handle_Personal_Details_TextView--------->*/
+        if (mAuth.getCurrentUser() != null) {
+            userUid = mAuth.getCurrentUser().getUid();
 
-        personalDetails();
-        fetchRecentMatchData();
+            /*<------------Handle_Personal_Details_TextView--------->*/
+            if (userUid != null) {
+                personalDetails();
+                fetchRecentMatchData();
+            } else {
+                Toast.makeText(this, "Internal error!", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(this, "User not logged in!", Toast.LENGTH_SHORT).show();
+            SharedPreferences sharedPreferences = getSharedPreferences(Sign_In_Activity.PREFS_NAME, 0);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("hasLoggedIn", false);
+            editor.commit();
+            Intent intent = new Intent(DashBoard_Activity.this, Sign_In_Activity.class);
+            startActivity(intent);
+            finish();
+        }
+
 
         /*<------------Handle_Github_link_On_click_Listener--------->*/
 
@@ -167,23 +183,27 @@ public class DashBoard_Activity extends AppCompatActivity {
     /*<------------Handle_Update_personal_Details--------->*/
 
     private void personalDetails() {
-
-        DocumentReference documentReference = fStore.collection("users").document(userUid);
-        documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                UserNameTV.setText(value.getString("userName"));
-                UserEmailTV.setText(value.getString("emailId"));
-                String avatarBase64 = value.getString("avatar");
-                if (avatarBase64 != null) {
-                    Bitmap avatarBitmap = convertBase64ToBitmap(avatarBase64);
-                    if (avatarBitmap != null) {
-                        userPhotoIV.setImageBitmap(avatarBitmap);
+        if (userUid != null) {
+            DocumentReference documentReference = fStore.collection("users").document(userUid);
+            documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                @Override
+                public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                    if (value != null) {
+                        UserNameTV.setText(value.getString("userName"));
+                        UserEmailTV.setText(value.getString("emailId"));
+                        String avatarBase64 = value.getString("avatar");
+                        if (avatarBase64 != null) {
+                            Bitmap avatarBitmap = convertBase64ToBitmap(avatarBase64);
+                            if (avatarBitmap != null) {
+                                userPhotoIV.setImageBitmap(avatarBitmap);
+                            }
+                        }
+                    } else {
+                        Log.d(TAG, "DocumentSnapshot is null");
                     }
                 }
-            }
-        });
-
+            });
+        }
     }
 
     private Bitmap convertBase64ToBitmap(String base64String) {
